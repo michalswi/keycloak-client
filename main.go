@@ -11,15 +11,15 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/michalswi/keycloak_client/home"
+	"github.com/michalswi/keycloak-client/home"
 
 	"github.com/coreos/go-oidc"
 	"github.com/gorilla/mux"
-	"github.com/michalswi/keycloak_client/auth"
-	"github.com/michalswi/keycloak_client/callback"
-	"github.com/michalswi/keycloak_client/demo"
-	"github.com/michalswi/keycloak_client/server"
-	"github.com/michalswi/keycloak_client/store"
+	"github.com/michalswi/keycloak-client/auth"
+	"github.com/michalswi/keycloak-client/callback"
+	"github.com/michalswi/keycloak-client/demo"
+	"github.com/michalswi/keycloak-client/server"
+	"github.com/michalswi/keycloak-client/store"
 )
 
 type accessToken struct {
@@ -30,10 +30,17 @@ func main() {
 
 	logger := log.New(os.Stdout, "oidc client ", log.LstdFlags|log.Lshortfile)
 
+	var clientSecret string
+	if len(os.Args) < 2 {
+		logger.Fatalf("Missing 'clientSecret' for demo-client")
+	} else {
+		clientSecret = os.Args[1]
+	}
+
 	serverAddress := "5050"
 	// serverAddress := os.Getenv("SERVICE_ADDR")
 	clientID := "demo-client"
-	clientSecret := "085f48aa-525c-44ba-a7ba-f388630167cf"
+	// clientSecret := "085f48aa-525c-44ba-a7ba-f388630167cf"
 	keycloakURL := "http://localhost:8080/auth/realms/demo"
 	redirectURL := "http://localhost:5050/demo/callback"
 
@@ -46,7 +53,7 @@ func main() {
 	}
 
 	// auth/auth.go
-	authenticator, err := auth.NewAuthenticator(clientID, clientSecret, keycloakURL, redirectURL)
+	authenticator, err := auth.NewAuthenticator(logger, clientID, clientSecret, keycloakURL, redirectURL)
 	if err != nil {
 		logger.Printf("Authenticator failed: %v", err)
 	}
@@ -71,10 +78,10 @@ func main() {
 	// start server
 	srv := server.NewServer(r, serverAddress)
 	go func() {
-		logger.Printf("Starting server on port: %s.\n", serverAddress)
+		logger.Printf("Starting server on port %s", serverAddress)
 		err := srv.ListenAndServe()
 		if err != nil {
-			logger.Fatalf("Server failed to start: %v\n", err)
+			logger.Fatalf("Server failed to start: %v", err)
 		}
 	}()
 	gracefulShutdown(srv, logger)

@@ -10,8 +10,8 @@ import (
 
 	"github.com/coreos/go-oidc"
 	"github.com/gorilla/mux"
-	"github.com/michalswi/keycloak_client/auth"
-	"github.com/michalswi/keycloak_client/store"
+	"github.com/michalswi/keycloak-client/auth"
+	"github.com/michalswi/keycloak-client/store"
 )
 
 type handlers struct {

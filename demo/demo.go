@@ -9,7 +9,7 @@ import (
 
 	"github.com/coreos/go-oidc"
 	"github.com/gorilla/mux"
-	"github.com/michalswi/keycloak_client/auth"
+	"github.com/michalswi/keycloak-client/auth"
 )
 
 type handlers struct {

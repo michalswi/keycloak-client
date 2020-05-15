@@ -15,6 +15,7 @@ type Authenticator struct {
 }
 
 func NewAuthenticator(
+	logger *log.Logger,
 	clientID string,
 	clientSecret string,
 	keycloakURL string,
@@ -25,7 +26,7 @@ func NewAuthenticator(
 
 	provider, err := oidc.NewProvider(ctx, keycloakURL)
 	if err != nil {
-		log.Printf("Failed to get provider, is it running?: %v", err)
+		logger.Printf("Failed to get provider, is it running?: %v", err)
 		return nil, err
 	}
 

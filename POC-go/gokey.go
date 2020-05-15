@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/coreos/go-oidc"
@@ -17,21 +18,19 @@ type accessToken struct {
 	IDToken string `json:"accessToken"`
 }
 
-func randToken(len int) string {
-	b := make([]byte, len)
-	_, err := rand.Read(b)
-	if err != nil {
-		log.Printf("Generate random state error: %v", err)
-	}
-	return base64.StdEncoding.EncodeToString(b)
-}
-
 func main() {
 
 	keycloakURL := "http://localhost:8080/auth/realms/demo"
 
+	var clientSecret string
+	if len(os.Args) < 2 {
+		log.Fatalf("Missing 'clientSecret' for demo-client")
+	} else {
+		clientSecret = os.Args[1]
+	}
+
 	clientID := "demo-client"
-	clientSecret := "370f7fb0-7007-41ce-9cd9-21ba6be46a17"
+	// clientSecret := "370f7fb0-7007-41ce-9cd9-21ba6be46a17"
 
 	redirectURL := "http://localhost:5050/demo/callback"
 
@@ -158,6 +157,15 @@ func main() {
 		w.Write(data)
 
 	})
-	log.Printf("Server is starting...\n")
+	log.Printf("Starting server on port 5050")
 	log.Fatal(http.ListenAndServe(":5050", nil))
+}
+
+func randToken(len int) string {
+	b := make([]byte, len)
+	_, err := rand.Read(b)
+	if err != nil {
+		log.Printf("Generate random state error: %v", err)
+	}
+	return base64.StdEncoding.EncodeToString(b)
 }

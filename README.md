@@ -1,7 +1,4 @@
-# simple keycloak client 
-
-main App: `keyclient.go`  
-POC App: `POC-go/gokey.go`
+# simple keycloak oidc client 
 
 ```
 # run Keycloak
@@ -19,31 +16,34 @@ jboss/keycloak:8.0.1
 
 1. Create a realm named 'demo'
 2. Create a client named 'demo-client'
-3. Configure the 'demo-client' to be confidential (Settings >> 'Access Type' to confidential) 
+3. Configure the 'demo-client' to be confidential (Settings >> 'Access Type' to 'confidential') 
 and use 'http://localhost:5050/demo/callback' as a 'Valid Redirect URIs'
-4. Create a user 'demo' with password 'demo'. Make sure to activate and 'impersonate' for this user.
-5. Check access, log in: 'http://localhost:8080/auth/realms/demo/account/'
-6. Get client secret (Clients >> demo-client >> Credentials >> Secret)
+4. Create a user 'demo' with password 'demo'. Make sure to activate and 'impersonate' for this user (set new password).
+5. Check access, log in to 'http://localhost:8080/auth/realms/demo/account/'
+6. Log in to 'http://localhost:8080/auth/' and get client secret (Clients >> demo-client >> Credentials >> Secret)
 
 
-# run main App
+#1 
+# run keycloak oidc client
 
-$ go run keyclient.go
+$ SECRET=91da3bca-f4a0-4ead-baad-bc26e0b4298d
+$ go run main.go $SECRET
 
-# in web browser connect to 'localhost:5050/home'
+# in a web browser connect to 'localhost:5050/home'
 # it will redirect you to Keycloak
-# provide demo/demo, it will redirect you to '/home'
+# provide 'demo/demo', it will redirect you to '/home'
 
 
-# run POC App
+#2 
+# run POC app
 
-$ go run gokey.go
+$ SECRET=91da3bca-f4a0-4ead-baad-bc26e0b4298d
+$ go run POC-go/gokey.go $SECRET
 
 # in web browser connect to 'localhost:5050/demo'
 # it will redirect you to Keycloak
 # provide demo/demo, it will give you token
 
-$ TOKEN="..."
-
-$ curl -i -XGET -H "Authorization: Bearer $TOKEN" localhost:5050/demo
+$ ACCESS_TOKEN=<>
+$ curl -i -XGET -H "Authorization: Bearer $ACCESS_TOKEN" localhost:5050/demo
 ```
