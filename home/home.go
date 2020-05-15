@@ -58,8 +58,6 @@ func (h *handlers) AppHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// w.Write([]byte("Hello World"))
-
 	message := "keycloak_client"
 	version := "0.0.1"
 	hostname, err := os.Hostname()

@@ -1,15 +1,17 @@
-## keycloak client 
+# simple keycloak client 
 
 main App: `keyclient.go`  
 POC App: `POC-go/gokey.go`
+
 ```
 # run Keycloak
 
-$ docker run -d -p 8080:8080 --rm \
+$ mkdir -p /tmp/kc
+$ docker run -d --rm --name kc \
+-p 8080:8080 \
 -e KEYCLOAK_USER=admin \
 -e KEYCLOAK_PASSWORD=admin \
--v $(pwd):/tmp \
---name kc \
+-v /tmp/kc:/tmp \
 jboss/keycloak:8.0.1
 
 
