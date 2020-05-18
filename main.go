@@ -40,7 +40,6 @@ func main() {
 	serverAddress := "5050"
 	// serverAddress := os.Getenv("SERVICE_ADDR")
 	clientID := "demo-client"
-	// clientSecret := "085f48aa-525c-44ba-a7ba-f388630167cf"
 	keycloakURL := "http://localhost:8080/auth/realms/demo"
 	redirectURL := "http://localhost:5050/demo/callback"
 

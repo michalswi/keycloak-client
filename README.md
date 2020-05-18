@@ -1,8 +1,16 @@
 # simple keycloak oidc client 
 
-```
-# run Keycloak
+The OIDC plugin needs three parameters to hook up with Keycloak (defined in `main.go`): 
 
+- the client ID (clientID)
+- the client secret (clientSecret)
+- the discovery endpoint (keycloakURL)  
+
+The discovery endpoint is needed to get information on where it can do authentication, token introspection, etc.
+
+#### # run Keycloak
+
+```
 $ mkdir -p /tmp/kc
 $ docker run -d --rm --name kc \
 -p 8080:8080 \
@@ -10,19 +18,25 @@ $ docker run -d --rm --name kc \
 -e KEYCLOAK_PASSWORD=admin \
 -v /tmp/kc:/tmp \
 jboss/keycloak:8.0.1
+```
 
+#### # configure Keycloak
+```
+- create a realm named 'demo'
 
-# configure Keycloak
+- create a client named 'demo-client' with 'openid-connect' (it's by default)
 
-1. Create a realm named 'demo'
-2. Create a client named 'demo-client'
-3. Configure the 'demo-client' to be confidential (Settings >> 'Access Type' to 'confidential') 
-and use 'http://localhost:5050/demo/callback' as a 'Valid Redirect URIs'
-4. Create a user 'demo' with password 'demo'. Make sure to activate and 'impersonate' for this user (set new password).
-5. Check access, log in to 'http://localhost:8080/auth/realms/demo/account/'
-6. Log in to 'http://localhost:8080/auth/' and get client secret (Clients >> demo-client >> Credentials >> Secret)
+- configure the 'demo-client' to be confidential (Settings >> 'Access Type' to 'confidential') and use 'http://localhost:5050/demo/callback' as a 'Valid Redirect URIs'
 
+- create a user 'demo' with password 'demo'. Make sure to activate and 'impersonate' for this user (set new password)
 
+- check access, log in to 'http://localhost:8080/auth/realms/demo/account/'
+
+- log in to 'http://localhost:8080/auth/' and get client secret (Clients >> demo-client >> Credentials >> Secret)
+```
+
+#### # play with oidc
+```
 #1 
 # run keycloak oidc client
 

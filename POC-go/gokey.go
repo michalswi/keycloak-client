@@ -30,8 +30,6 @@ func main() {
 	}
 
 	clientID := "demo-client"
-	// clientSecret := "370f7fb0-7007-41ce-9cd9-21ba6be46a17"
-
 	redirectURL := "http://localhost:5050/demo/callback"
 
 	ctx := context.Background()
