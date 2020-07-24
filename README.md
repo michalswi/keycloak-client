@@ -20,7 +20,7 @@ $ docker run -d --rm --name kc \
 -e KEYCLOAK_USER=admin \
 -e KEYCLOAK_PASSWORD=admin \
 -v /tmp/kc:/tmp \
-jboss/keycloak:8.0.1
+jboss/keycloak:10.0.2
 ```
 
 #### # configure Keycloak
