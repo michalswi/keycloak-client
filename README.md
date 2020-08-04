@@ -8,7 +8,7 @@ The OIDC plugin needs three parameters to hook up with Keycloak (defined in `mai
 
 The discovery endpoint is needed to get information on where it can do authentication, token introspection, etc.
 
-An example how to use Golang Keycloak Client (not OIDC) described in the bottom. It's base on:  
+An example how to use Golang Keycloak Client (not OIDC) described in the [bottom](#-play-with-golang-keycloak-client). It's base on:  
 https://github.com/Nerzal/gocloak
 
 #### # run Keycloak
@@ -81,6 +81,6 @@ service-account-demo-client, 712cb93e-a091-4013-b3da-b9c84148d476
 demo-role, b3735f63-1391-402d-a5f6-cb8b032dd84e
 Realm role 'demo-role' added to user 'service-account-demo-client'
 
-- once realm role is added, check in the Keycloak GUI (can't get that thru API for kc version <= 10.0.2), 
+- once realm role is added, check in the Keycloak GUI (can't get that thru API for kc version <= 11.0.0), 
 Clients >> select 'demo-client' >> Service Account Roles >> Realm Roles
 ```
